@@ -1,0 +1,39 @@
+pimpleTKEBudgetFoam
+* Definir averagingProperties: tStartAveraging
+* Para reiniciar simulación no se necesita
+* Equivalencias
+UMean = UTimeAveraged
+UPrime2Mean = RResTimeAveraged
+pMean = pTimeAveraged
+
+
+
+*Res
+      DNS
+      LES
+kSGS
+      DNS: N/A (No SGS model)
+      Smagorinsky
+      kEqn    
+LESResIndex
+      DNS: N/A (No SGS model) -> Numercial diffusion
+      Smagorinsky
+      kEqn    
+pPrime
+      DNS
+      Smagorinsky
+      kEqn    
+pTimeAveraged
+      DNS
+      Smagorinsky
+      kEqn    
+RRes
+      DNS
+      Smagorinsky
+      kEqn    
+UPrime
+      DNS
+      Smagorinsky
+      kEqn    
+
+
