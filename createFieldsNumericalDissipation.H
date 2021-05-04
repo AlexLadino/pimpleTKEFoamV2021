@@ -1,3 +1,6 @@
+Info<< "Dentro de createFieldsNumericalDissipation.H \n" << endl;
+
+Info<< "Creating trDissipationSmall NO_READ \n" << endl;
 const volScalarField trDissipationSmall
 (
     IOobject
@@ -17,6 +20,7 @@ const volScalarField trDissipationSmall
       )
 );
 
+Info<< "Creating prodTKERes READ_IF_PRESENT \n" << endl;
 volScalarField prodTKERes
 (
     IOobject
@@ -30,6 +34,7 @@ volScalarField prodTKERes
     0.5*tr(prodRes)
 );
 
+Info<< "Creating prodTKEMean READ_IF_PRESENT \n" << endl;
 volScalarField prodTKEMean
 (
     IOobject
@@ -49,8 +54,10 @@ volScalarField prodTKEMean
       )
 );
 
+Info<< "Generating prodTKEAcc\n" << endl;
 volScalarField prodTKEAcc(prodTKEMean*tSpanTKE);
 
+Info<< "Creating dissipationTKERes READ_IF_PRESENT \n" << endl;
 volScalarField dissipationTKERes
 (
     IOobject
@@ -64,6 +71,7 @@ volScalarField dissipationTKERes
     0.5*tr(dissipationRes)
 );
 
+Info<< "Creating dissipationTKEMean READ_IF_PRESENT \n" << endl;
 volScalarField dissipationTKEMean
 (
     IOobject
@@ -83,8 +91,10 @@ volScalarField dissipationTKEMean
       ) 
 );
 
+Info<< "Creating dissipationTKEAcc READ_IF_PRESENT \n" << endl;
 volScalarField dissipationTKEAcc(dissipationTKEMean*tSpanTKE);
 
+Info<< "Creating turbulenceTransportTKERes READ_IF_PRESENT \n" << endl;
 volScalarField turbulenceTransportTKERes
 (
     IOobject
@@ -98,6 +108,7 @@ volScalarField turbulenceTransportTKERes
     0.5*tr(turbTransRes)
 );
 
+Info<< "Creating turbulenceTransportTKEMean READ_IF_PRESENT \n" << endl;
 volScalarField turbulenceTransportTKEMean
 (
     IOobject
@@ -117,8 +128,10 @@ volScalarField turbulenceTransportTKEMean
       )
 );
 
+Info<< "Generating turbulenceTransportTKEAcc READ_IF_PRESENT \n" << endl;
 volScalarField turbulenceTransportTKEAcc(turbulenceTransportTKEMean*tSpanTKE);
 
+Info<< "Creating viscousDiffusionTKERes READ_IF_PRESENT \n" << endl;
 volScalarField viscousDiffusionTKERes
 (
     IOobject
@@ -132,6 +145,7 @@ volScalarField viscousDiffusionTKERes
     0.5*tr(molDiffRes)
 );
 
+Info<< "Creating viscousDiffusionTKEMean READ_IF_PRESENT \n" << endl;
 volScalarField viscousDiffusionTKEMean
 (
     IOobject
@@ -151,8 +165,10 @@ volScalarField viscousDiffusionTKEMean
       )
 );
 
+Info<< "Generating viscousDiffusionTKEAcc \n" << endl;
 volScalarField viscousDiffusionTKEAcc(viscousDiffusionTKEMean*tSpanTKE);
 
+Info<< "Creating pressureDiffusionTKERes READ_IF_PRESENT \n" << endl;
 volScalarField pressureDiffusionTKERes
 (
     IOobject
@@ -166,6 +182,7 @@ volScalarField pressureDiffusionTKERes
     0.5*tr(pDiffRes)
 );
 
+Info<< "Creating pressureDiffusionTKEMean READ_IF_PRESENT \n" << endl;
 volScalarField pressureDiffusionTKEMean
 (
     IOobject
@@ -185,8 +202,10 @@ volScalarField pressureDiffusionTKEMean
       )
 );
 
+Info<< "Creating pressureDiffusionTKEAcc \n" << endl;
 volScalarField pressureDiffusionTKEAcc(pressureDiffusionTKEMean*tSpanTKE);
 
+Info<< "Creating pressureStrainTKERes READ_IF_PRESENT \n" << endl;
 volScalarField pressureStrainTKERes
 (
     IOobject
@@ -200,6 +219,7 @@ volScalarField pressureStrainTKERes
     0.5*tr(pStrainRes)
 );
 
+Info<< "Creating pressureStrainTKEMean READ_IF_PRESENT \n" << endl;
 volScalarField pressureStrainTKEMean
 (
     IOobject
@@ -219,8 +239,10 @@ volScalarField pressureStrainTKEMean
       )     
 );
 
+Info<< "Generating pressureStrainTKEAcc \n" << endl;
 volScalarField pressureStrainTKEAcc(pressureStrainTKEMean*tSpanTKE);
 
+Info<< "Creating dissipationNumericalRes READ_IF_PRESENT \n" << endl;
 volScalarField dissipationNumericalRes
 (
     IOobject
@@ -234,6 +256,7 @@ volScalarField dissipationNumericalRes
 -0.5*(tr(DDtReynoldsStressRes) - (tr(prodRes) + tr(dissipationRes) + tr(turbTransRes) + tr(pStrainRes) + tr(pDiffRes) + tr(molDiffRes)))
 );
 
+Info<< "Creating dissipationNumericalMean READ_IF_PRESENT \n" << endl;
 volScalarField dissipationNumericalMean
 (
     IOobject
@@ -253,8 +276,10 @@ volScalarField dissipationNumericalMean
       )
 );
 
+Info<< "Generating dissipationNumericalAcc \n" << endl;
 volScalarField dissipationNumericalAcc(dissipationNumericalMean*tSpanTKE);
 
+Info<< "Creating nuNumericalRes READ_IF_PRESENT \n" << endl;
 volScalarField nuNumericalRes
 (
     IOobject
@@ -268,6 +293,7 @@ volScalarField nuNumericalRes
         nuLam*(dissipationNumericalRes/(max(trDissipationSmall,0.5*tr(dissipationRes))))
 );
 
+Info<< "Creating nuNumericalMean READ_IF_PRESENT \n" << endl;
 volScalarField nuNumericalMean
 (
     IOobject
@@ -287,10 +313,12 @@ volScalarField nuNumericalMean
       )
 );
 
+Info<< "Generating nuNumericalAcc \n" << endl;
 volScalarField nuNumericalAcc(nuNumericalMean*tSpanTKE);
 Info<< "Min nuNumericalAcc :: " << gMin(nuNumericalAcc) << " Max nuNumericalAcc:: " << gMax(nuNumericalAcc) << nl << endl;
 Info<< "tSpanTKE :: " << tSpanTKE << nl << endl;
 
+Info<< "Creating QDNSIndexRes READ_IF_PRESENT \n" << endl;
 volScalarField QDNSIndexRes // Eq 7.4 Launchbury
 (
     IOobject
@@ -304,6 +332,7 @@ volScalarField QDNSIndexRes // Eq 7.4 Launchbury
       nuNumericalRes/(nuNumericalRes + nuLam) 
 );
 
+Info<< "Creating QDNSIndexMean READ_IF_PRESENT \n" << endl;
 volScalarField QDNSIndexMean
 (
     IOobject
@@ -323,9 +352,11 @@ volScalarField QDNSIndexMean
       )  
 );
 
+Info<< "Generating QDNSIndexAcc \n" << endl;
 volScalarField QDNSIndexAcc(QDNSIndexMean*tSpanTKE);
 
 // Fluctuating strain rate
+Info<< "Creating SRes NO_READ \n" << endl;
 volSymmTensorField SRes
 (
     IOobject
@@ -340,6 +371,7 @@ volSymmTensorField SRes
 );
 
 // Dissipation
+Info<< "Creating epsRes NO_READ \n" << endl;
 volScalarField epsRes
 (
     IOobject
@@ -353,5 +385,5 @@ volScalarField epsRes
         -2*nuLam*(SRes && SRes)
 );
 
-
+Info<< "Fin createFieldsNumericalDissipation.H \n" << endl;
 
