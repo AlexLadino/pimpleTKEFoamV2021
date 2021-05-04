@@ -140,6 +140,8 @@ dimensionedScalar tStartBudget
 
 //Mean fields are read if present
 
+Info<< "Reading field UMean READ_IF_PRESENT \n" << endl;
+
 volVectorField UMean
 (
     IOobject
@@ -161,6 +163,7 @@ volVectorField UMean
 
 //UMean.write();
 
+Info<< "Reading field pMean READ_IF_PRESENT \n" << endl;
 volScalarField pMean
 (
     IOobject
@@ -180,6 +183,7 @@ volScalarField pMean
       )      
 );
 
+Info<< "Reading field vorticityMean READ_IF_PRESENT \n" << endl;
 volVectorField vorticityMean
 (
     IOobject
@@ -202,6 +206,7 @@ volVectorField vorticityMean
 
 //Instantiate accumulated U*time_step and p*time_step to calculate the average
 //Initialize as Averaged_Value/Sampling_time (where sampling time = tStart - tStartAveraging) to continue averaging from previous fields
+Info<< "Generating UAcc NO_READ \n" << endl;
 volVectorField UAcc
 (
     IOobject
@@ -215,6 +220,7 @@ volVectorField UAcc
         UMean*tSpan
 );
 
+Info<< "Generating pAcc NO_READ \n" << endl;
 volScalarField pAcc
 (
     IOobject
@@ -228,6 +234,7 @@ volScalarField pAcc
         pMean*tSpan
 );
 
+Info<< "Generating vorticityAcc NO_READ \n" << endl;
 volVectorField vorticityAcc
 (
     IOobject
@@ -242,6 +249,7 @@ volVectorField vorticityAcc
 );
 
 //Instantiate instantaneous values of velocity and pressure fluctuations
+Info<< "Generating UPrime NO_READ \n" << endl;
 volVectorField UPrime
 (
     IOobject
@@ -255,6 +263,7 @@ volVectorField UPrime
 	U-UMean
 );
 
+Info<< "Generating pPrime NO_READ \n" << endl;
 volScalarField pPrime
 (
     IOobject
@@ -268,6 +277,7 @@ volScalarField pPrime
 	p-pMean
 );
 
+Info<< "Generating vorticityPrime NO_READ \n" << endl;
 volVectorField vorticityPrime
 (
     IOobject
@@ -297,14 +307,17 @@ autoPtr<incompressible::turbulenceModel> turbulence
 
 //Instantiate useful instantaneous fields to calculate the budgets
 //The corresponding time-averaged quantities for the various fields can be calculated using the fieldAverage function object
+Info<< "Generating nuLam \n" << endl;
 const volScalarField nuLam(turbulence->nu());
-
+Info<< "Generating gradUPrime \n" << endl;
 volTensorField gradUPrime(fvc::grad(UPrime));
+Info<< "Generating twoSRes \n" << endl;
 volSymmTensorField twoSRes(twoSymm(gradUPrime));
+Info<< "Generating gradUMean \n" << endl;
 volTensorField gradUMean(fvc::grad(UMean));
 
 // --------------------------------------------------------------------
-
+Info<< "Generating vorticity2PrimeRes NO_READ \n" << endl;
 volSymmTensorField vorticity2PrimeRes
 (
     IOobject
@@ -318,6 +331,7 @@ volSymmTensorField vorticity2PrimeRes
     symm(vorticityPrime*vorticityPrime)
 );
 
+Info<< "Reading field vorticity2PrimeMean READ_IF_PRESENT \n" << endl;
 volSymmTensorField vorticity2PrimeMean
 (
     IOobject
@@ -332,8 +346,10 @@ volSymmTensorField vorticity2PrimeMean
     dimensionedSymmTensor("vorticity2PrimeMean", dimless/(dimTime*dimTime), symmTensor::zero)
 );
 
+Info<< "Generating vorticity2PrimeMean \n" << endl;
 volSymmTensorField vorticity2PrimeAcc(vorticity2PrimeMean*tSpan);
 
+Info<< "Generating RRes NO_READ \n" << endl;
 volSymmTensorField RRes
 (
     IOobject
@@ -347,6 +363,7 @@ volSymmTensorField RRes
     symm((UPrime*UPrime))
 );
 
+Info<< "Generating RMean NO_READ \n" << endl;
 volSymmTensorField RMean
 (
     IOobject
@@ -366,15 +383,24 @@ volSymmTensorField RMean
       )
 );
 
+Info<< "Generating RAcc \n" << endl;
 volSymmTensorField RAcc(RMean*tSpan);
 
+Info<< "Creating createFieldsProduction \n" << endl;
 #include "createFieldsProduction.H" //    OK
+Info<< "Creating createFieldsDissipation \n" << endl;
 #include "createFieldsDissipation.H"      //    OK
+Info<< "Creating createFieldsTurbulentTransport \n" << endl;
 #include "createFieldsTurbulentTransport.H" //      OK
+Info<< "Creating createFieldsPressureStrain \n" << endl;
 #include "createFieldsPressureStrain.H"   //    OK
+Info<< "Creating createFieldsPressureDiffusion \n" << endl;
 #include "createFieldsPressureDiffusion.H"      //    OK
+Info<< "Creating createFieldsMolecularDiffusion \n" << endl;
 #include "createFieldsMolecularDiffusion.H"     //    OK
+Info<< "Creating createFieldsTotalDerivativeReynoldsStress \n" << endl;
 #include "createFieldsTotalDerivativeReynoldsStress.H"      //    OK
+Info<< "Creating createFieldsNumericalDissipation \n" << endl;
 #include "createFieldsNumericalDissipation.H"   //    OK
 
 /*
