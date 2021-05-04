@@ -290,7 +290,14 @@ volScalarField nuNumericalRes
         IOobject::READ_IF_PRESENT,
         IOobject::NO_WRITE // AUTO_WRITE
     ),
-        nuLam*(dissipationNumericalRes/(max(trDissipationSmall,0.5*tr(dissipationRes))))
+        // nuLam*(dissipationNumericalRes/(max(trDissipationSmall,0.5*tr(dissipationRes))))
+    mesh,
+       dimensionedScalar
+      (
+           "nuNumericalMean", 
+           dimLength*dimLength/dimTime, 
+           scalar (VSMALL)
+      )
 );
 
 Info<< "Creating nuNumericalMean READ_IF_PRESENT \n" << endl;
